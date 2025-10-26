@@ -1,0 +1,6 @@
+function f_del2_out = f2_del2(x,N,L_s,L_RTV,k_0,k_s,k_RTV)
+    f_del2_out = (2*(1:N)'-2).*(2*(1:N)'-3).*(x+L_s+L_RTV).^(2*(1:N)'-4) ...
+        - L_s^-2*big_gamma_12(N,L_s,k_RTV,k_s).*((1:N)').*((1:N)'-1).*((1+x/L_s+L_RTV/L_s).^((1:N)'-2)) ...
+        - (L_s + L_RTV)^-2*big_gamma_23(N,L_RTV,L_s,k_0,k_s,k_RTV).*((1:N)').*((1:N)'-1).*((1+x/(L_s+L_RTV)).^((1:N)'-2));
+   
+end
