@@ -182,8 +182,7 @@ rho_char_nominal = readmatrix([matl_dir,TPS_matl_str,'/',TPS_matl_str,'_solid.xl
 
 % Pullling properties from TPS stackup
 
-% Load properties for the thermal resistance layer. In M2020 this is
-% HT424
+% Load properties for the thermal resistance layer.
 L_RTV = inputs.(inputs.stackup.layers{2}).L;
 RTV_matl_str = inputs.(inputs.stackup.layers{2}).material;
 rho_RTV = readmatrix([matl_dir,RTV_matl_str,'/',RTV_matl_str,'_solid.xlsx'],'Sheet','rho');
@@ -192,7 +191,7 @@ Cp_RTV = readmatrix([matl_dir,RTV_matl_str,'/',RTV_matl_str,'_solid.xlsx'],'Shee
 alpha_RTV = k_RTV/(rho_RTV*Cp_RTV);
 
 
-% Load properties for "structure"- this would typically be the Al
+% Load properties for "substructure"- this would typically be the Al
 % honeycomb
 L_s = inputs.(inputs.stackup.layers{3}).L;
 sub_matl_str = inputs.(inputs.stackup.layers{3}).material;
