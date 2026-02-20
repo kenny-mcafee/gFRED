@@ -1,7 +1,6 @@
 clear
 close all
 
-
 %% Initializing path variables and parsing input files
 % add path to include directory
 addpath(genpath([pwd,'/include']))

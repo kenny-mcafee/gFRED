@@ -25,34 +25,25 @@ function [V,gamma] = build_GF_stackup_full(N,TPS_props,Struct_props,RTV_props,th
 
     a1 = -(k_s)*L_s_coeff_vect_eig*((L_s_weights_vect_eig.*grad_f1_vect)*grad_f1_vect');
     a15 = -k_RTV*L_RTV_coeff_vect_eig*((L_RTV_weights_vect_eig.*grad_f15_vect)*grad_f15_vect');
-    % a2 = theta_scale*(k_0)*L_coeff_vect_eig*((L_weights_vect_eig.*grad_f2_vect)*grad_f2_vect');
     a2 = -(k_0)*L_coeff_vect_eig*((L_weights_vect_eig.*grad_f2_vect)*grad_f2_vect');
 
-    % a = a1 + a15 + a2;
-    a = theta_scale*(a1 + a15) + a2;
+    a = a1 + a15 + a2;
 
     b1 = (k_s/alpha_s)*L_s_coeff_vect_eig*((L_s_weights_vect_eig.*f1_vect)*f1_vect');
     b15 = (k_RTV/alpha_RTV)*L_RTV_coeff_vect_eig*((L_RTV_weights_vect_eig.*f15_vect)*f15_vect');
-    % b2 = theta_scale*(k_0/alpha_0)*L_coeff_vect_eig*((L_weights_vect_eig.*f2_vect)*f2_vect');
     b2 = (k_0/alpha_0)*L_coeff_vect_eig*((L_weights_vect_eig.*f2_vect)*f2_vect');
 
-    % b = b1 + b15 + b2;
-    b = theta_scale*(b1 + b15) + b2;
-
+    b = b1 + b15 + b2;
+    
     a = (a+a')/2;
     b = (b+b')/2;
     
     [R,flag] = chol(b);
     if flag ~= 0
-        % keyboard
-        [R,~] = chol(nearestSPD(b));
-        disp('b matrix was not symmetric positive definite. Trying nearestSPD.')
+        error('b matrix was not symmetric positive definite.')
     end
 
-    % digits(128)
-    % [V_bar,D] = eig(vpa(R'^-1*a*(R)^-1));
-
-    % [V_bar,D] = eig((R'^-1*a*(R)^-1));
+    %Computing eigenvalue problem
     [V_bar,D] = eig(-(R'^-1*a*(R)^-1));
 
     %note: outputs have to be floats
@@ -66,13 +57,13 @@ function [V,gamma] = build_GF_stackup_full(N,TPS_props,Struct_props,RTV_props,th
     % test1 = (b^-1*a) - (b^-1*a)';
     % test2 = theta_scale*V'*(((theta_scale*V*b)')^-1) - V'*(((V*b)')^-1)
 
-    psi1 = V'*f1_vect;
-    psi15 = V'*f15_vect;
-    psi2 = V'*f2_vect;
-
-    grad_psi1 = V'*grad_f1_vect;
-    grad_psi15 = V'*grad_f15_vect;
-    grad_psi2 = V'*grad_f2_vect;
+    % psi1 = V'*f1_vect;
+    % psi15 = V'*f15_vect;
+    % psi2 = V'*f2_vect;
+    % 
+    % grad_psi1 = V'*grad_f1_vect;
+    % grad_psi15 = V'*grad_f15_vect;
+    % grad_psi2 = V'*grad_f2_vect;
 
     % figure(10001)
     % clf(10001)
